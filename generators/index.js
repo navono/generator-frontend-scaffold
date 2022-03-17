@@ -50,13 +50,14 @@ module.exports = class extends Generator {
   writing() {
     if (this.answers.templateType === 'React Project') {
       this._writingReactTemplate();
-    } else if (this.answers.templateType === 'React Project that need publish to nexus') {
-      this._writingApiTemplate()
     }
-    else {
-      this._writingReactTemplate()
-      this._writingApiTemplate()
-    }
+    // else if (this.answers.templateType === 'React Project that need publish to nexus') {
+    //   this._writingApiTemplate()
+    // }
+    // else {
+    //   this._writingReactTemplate()
+    //   this._writingApiTemplate()
+    // }
   }
 
   end() {
