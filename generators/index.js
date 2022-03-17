@@ -37,8 +37,8 @@ module.exports = class extends Generator {
   }
 
   install() {
-    this.addDependencies({ dependency: 'version' });
-    this.addDevDependencies({ dependency: 'version' });
+    // this.addDependencies({ dependency: 'version' });
+    // this.addDevDependencies({ dependency: 'version' });
   }
 
   initializing() {
@@ -69,11 +69,11 @@ module.exports = class extends Generator {
 
   _writingReactTemplate() {
     this.fs.copy(
-      this.templatePath('frontend'),
+      this.templatePath('react-project'),
       this.destinationPath('./')
     )
     this.fs.copyTpl(
-      this.templatePath('frontend/public/index.html'),
+      this.templatePath('react-project/public/index.html'),
       this.destinationPath('./public/index.html'),
       { title: this.answers.name } // Embedded JavaScript templating.
     )
