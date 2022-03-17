@@ -1,6 +1,18 @@
 const Generator = require('yeoman-generator');
 const chalk = require('chalk');
 
+/**
+ * The complete priority methods:
+ *  initializing  : the method's initialization for example the initial state of the project, initial configs, etc.
+ *  prompting -: CLI prompt for options to the user.
+ *  configuring :  To save project configs and save metadata.
+ *  default :  Usable when a method doesn't merge with application priority.
+ *  writing :  It's responsible to write the specifics files of a generator for example: template, routes, etc.
+ *  conflicts :  Handler for conflicts(internal use).
+ *  install :  Where the install methods are called(npm, bower, go get).
+ *  end : Last method to call we can put finish messages, cleanup, etc.
+ */
+
 module.exports = class extends Generator {
   constructor(args, opts) {
     super(args, opts);
@@ -20,12 +32,13 @@ module.exports = class extends Generator {
       type: 'list',
       name: 'templateType',
       message: 'Select the template you want:',
-      choices: ['Front-End React', 'Node API builder', 'FullStack Application']
+      choices: ['React Project', 'React Project that need publish to nexus']
     }]);
   }
 
   install() {
-    this.npmInstall();
+    this.addDependencies({ dependency: 'version' });
+    this.addDevDependencies({ dependency: 'version' });
   }
 
   initializing() {
@@ -35,9 +48,9 @@ module.exports = class extends Generator {
   }
 
   writing() {
-    if (this.answers.templateType === 'Front-End React') {
+    if (this.answers.templateType === 'React Project') {
       this._writingReactTemplate();
-    } else if (this.answers.templateType === 'Node API builder') {
+    } else if (this.answers.templateType === 'React Project that need publish to nexus') {
       this._writingApiTemplate()
     }
     else {
@@ -57,11 +70,11 @@ module.exports = class extends Generator {
   _writingReactTemplate() {
     this.fs.copy(
       this.templatePath('frontend'),
-      this.destinationPath('frontend')
+      this.destinationPath('./')
     )
     this.fs.copyTpl(
       this.templatePath('frontend/public/index.html'),
-      this.destinationPath('frontend/public/index.html'),
+      this.destinationPath('./public/index.html'),
       { title: this.answers.name } // Embedded JavaScript templating.
     )
   }
@@ -69,7 +82,7 @@ module.exports = class extends Generator {
   _writingApiTemplate() {
     this.fs.copy(
       this.templatePath('api'),
-      this.destinationPath('api')
+      this.destinationPath('./')
     )
   }
 
